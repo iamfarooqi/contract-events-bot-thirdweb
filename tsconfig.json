@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "target": "ES5",
+    "module": "CommonJS",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "strictNullChecks": true,
+    "noImplicitAny": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "declaration": true,
+    "declarationDir": "./types",
+    "typeRoots": ["./node_modules/@types", "./types"],
+    "lib": ["ES2015", "DOM"], // Include ES2015 for Promises and DOM for browser compatibility
+    "baseUrl": "./",
+    "paths": {
+      "@myapp/*": ["src/*"]
+    }
+  },
+
+  "include": ["src/**/*.ts"], // Specifies the files to be included in compilation
+  "exclude": ["node_modules", "dist"] // Specifies files or directories to be excluded from compilation
+}
