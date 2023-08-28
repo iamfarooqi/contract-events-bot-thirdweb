@@ -1,7 +1,8 @@
 import * as fs from 'fs';
 import 'dotenv/config';
 import { Abi, Address } from '../utils/contract';
-import { sdk } from '../config/config';
+import { sdk } from '../config/contract';
+import { saveEventToMongoDB } from './saveEventsToDB';
 
 // This function listens to all the events emitted form the smart contract and will save the events to allEventsData.json
 
@@ -13,20 +14,22 @@ export async function listenToAllEvents() {
     contract.events.listenToAllEvents((event) => {
       console.log(event.eventName, 'eventName'); // the name of the emitted event
 
-      const eventDetails = {
-        eventName: event.eventName,
-        eventData: event.data,
-      };
+      saveEventToMongoDB(event);
 
-      AllEvents.push(eventDetails);
+      // const eventDetails = {
+      //   eventName: event.eventName,
+      //   eventData: event.data,
+      // };
 
-      fs.writeFile('./allEventsData.json', JSON.stringify(AllEvents), (err) => {
-        if (err) {
-          console.error(err);
-        } else {
-          console.log({ message: 'Data updated successfully' });
-        }
-      });
+      // AllEvents.push(eventDetails);
+
+      // fs.writeFile('./allEventsData.json', JSON.stringify(AllEvents), (err) => {
+      //   if (err) {
+      //     console.error(err);
+      //   } else {
+      //     console.log({ message: 'Data updated successfully' });
+      //   }
+      // });
     });
   } catch (error) {
     console.log('Error while listening to all Events: ', error);

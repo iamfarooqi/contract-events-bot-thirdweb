@@ -2,7 +2,8 @@ import axios from 'axios';
 import * as fs from 'fs';
 import 'dotenv/config';
 import { Abi, Address } from '../utils/contract';
-import { provider, sdk } from '../config/config';
+import { provider, sdk } from '../config/contract';
+import { saveEventToMongoDB } from './saveEventsToDB';
 
 // Function for getting the latest block
 async function getLatestBlockNumber() {
@@ -50,6 +51,8 @@ export async function eventsSetup() {
         for (let i = 0; i < events.length; i++) {
           const event = events[i];
           console.log(event, 'event>>');
+
+          await saveEventToMongoDB(event);
 
           const block = await provider.getBlock(event.transaction.blockNumber);
           const timestamp = block.timestamp;
